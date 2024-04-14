@@ -12,6 +12,7 @@
 		207F43DA2BCC503700E19922 /* ARUtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207F43D92BCC503700E19922 /* ARUtilitiesTests.swift */; };
 		207F43DB2BCC503700E19922 /* ARUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 207F43CD2BCC503700E19922 /* ARUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		207F43E62BCC505F00E19922 /* AudioBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207F43E52BCC505F00E19922 /* AudioBackgroundView.swift */; };
+		207F43EA2BCC56A400E19922 /* ARUtilities.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 207F43E92BCC56A400E19922 /* ARUtilities.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		207F43D42BCC503700E19922 /* ARUtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARUtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		207F43D92BCC503700E19922 /* ARUtilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUtilitiesTests.swift; sourceTree = "<group>"; };
 		207F43E52BCC505F00E19922 /* AudioBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBackgroundView.swift; sourceTree = "<group>"; };
+		207F43E92BCC56A400E19922 /* ARUtilities.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ARUtilities.podspec; path = ../ARUtilities.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +57,8 @@
 		207F43C02BCC503700E19922 = {
 			isa = PBXGroup;
 			children = (
-				207F43CC2BCC503700E19922 /* ARUtilities */,
+				207F43E92BCC56A400E19922 /* ARUtilities.podspec */,
+				207F43CC2BCC503700E19922 /* Sources */,
 				207F43D82BCC503700E19922 /* ARUtilitiesTests */,
 				207F43CB2BCC503700E19922 /* Products */,
 			);
@@ -70,14 +73,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		207F43CC2BCC503700E19922 /* ARUtilities */ = {
+		207F43CC2BCC503700E19922 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				207F43E42BCC504600E19922 /* Sources */,
+				207F43E42BCC504600E19922 /* Views */,
 				207F43CD2BCC503700E19922 /* ARUtilities.h */,
 				207F43CE2BCC503700E19922 /* ARUtilities.docc */,
 			);
-			path = ARUtilities;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		207F43D82BCC503700E19922 /* ARUtilitiesTests */ = {
@@ -88,12 +91,12 @@
 			path = ARUtilitiesTests;
 			sourceTree = "<group>";
 		};
-		207F43E42BCC504600E19922 /* Sources */ = {
+		207F43E42BCC504600E19922 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				207F43E52BCC505F00E19922 /* AudioBackgroundView.swift */,
 			);
-			path = Sources;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				207F43EA2BCC56A400E19922 /* ARUtilities.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
