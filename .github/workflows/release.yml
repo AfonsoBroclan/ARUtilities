@@ -10,7 +10,8 @@ on:
     branches: [ "main" ]
 
 env:
-  APP_VERSION: "0.0.2"
+  APP_VERSION: "0.0.2" # Change accordingly
+  DESTINATION: "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest"
   
 jobs:
   release:
@@ -21,9 +22,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: swift build -v
+      run: |
+        echo "🛠️ Building for destination $DESTINATION..."
+        xcrun swift build -v -c release --destination "$DESTINATION"
     - name: Run tests
-      run: swift test -v
+      run: |
+        echo "🧪 Testing in simulator..."
+        xcrun swift test -v --destination "$DESTINATION"
     - name: Create Tag
       if: success()
       run: |
