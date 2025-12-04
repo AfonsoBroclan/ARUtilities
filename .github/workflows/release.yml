@@ -11,10 +11,7 @@ on:
 
 env:
   APP_VERSION: "0.0.2" # Change accordingly
-  DESTINATION_PLATFORM: "iOS Simulator"
-  DESTINATION_NAME: "iPhone 17 Pro"
-  DESTINATION_OS: "latest"
-  DESTINATION: "platform=${{ env.DESTINATION_PLATFORM }},name=${{ env.DESTINATION_NAME }},OS=${{ env.DESTINATION_OS }}"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 17 Pro,OS=17.0"
   
 jobs:
   release:
