@@ -1,0 +1,42 @@
+# This workflow will build the package and run its tests
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  APP_VERSION: "0.0.2"
+  
+jobs:
+  release:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+    - name: Create Tag
+      if: success()
+      run: |
+        echo "🏷️ Creating tag for $APP_VERSION..."
+        if git tag $APP_VERSION; then
+          echo "✅ Tag $APP_VERSION created locally"
+          if git push origin $APP_VERSION; then
+            echo "🏷️ Tag $APP_VERSION pushed to origin!"
+          else
+            echo "❌ Failed to push!"
+            exit 1
+          fi
+        else
+          echo "❌ Failed to create!"
+          exit 1
+        fi
