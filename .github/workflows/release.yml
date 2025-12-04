@@ -24,11 +24,11 @@ jobs:
     - name: Build
       run: |
         echo "🛠️ Building for destination $DESTINATION..."
-        xcrun swift build -v -c release --destination "$DESTINATION"
+        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" build
     - name: Run tests
       run: |
         echo "🧪 Testing in simulator..."
-        xcrun swift test -v --destination "$DESTINATION"
+        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" test
     - name: Create Tag
       if: success()
       run: |
