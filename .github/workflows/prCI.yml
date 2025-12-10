@@ -14,8 +14,8 @@ on:
       - ready_for_review
     paths-ignore:
       - 'README.md'
-      - '.github/**'
-  
+      - 'LICENSE'
+
 jobs:
   build-test:
     uses: ./.github/workflows/buildTest.yml
