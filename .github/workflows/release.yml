@@ -6,42 +6,29 @@ name: Release
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 env:
   APP_VERSION: "0.0.2" # Change accordingly
-  DESTINATION: "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest"
   
 jobs:
+  build-test:
+    uses: ./.github/workflows/buildTest.yml
+
   release:
+    needs: build-test
     runs-on: macos-latest
     permissions:
       contents: write
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build
-      run: |
-        echo "🛠️ Building for destination $DESTINATION..."
-        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" build
-    - name: Run tests
-      run: |
-        echo "🧪 Testing in simulator..."
-        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" test
     - name: Create Tag
-      if: success()
       run: |
         echo "🏷️ Creating tag for $APP_VERSION..."
-        if git tag $APP_VERSION; then
-          echo "✅ Tag $APP_VERSION created locally"
-          if git push origin $APP_VERSION; then
-            echo "🏷️ Tag $APP_VERSION pushed to origin!"
-          else
-            echo "❌ Failed to push!"
-            exit 1
-          fi
-        else
-          echo "❌ Failed to create!"
-          exit 1
+        if git rev-parse "$APP_VERSION" >/dev/null 2>&1; then
+          echo "⚠️ Tag $APP_VERSION already exists, skipping..."
+          exit 0
         fi
+        git tag "$APP_VERSION"
+        git push origin "$APP_VERSION"
+        echo "🏷️ Tag $APP_VERSION created and pushed!"

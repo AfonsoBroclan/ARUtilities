@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "CA744ECA-7A0B-4F5D-BB03-7EC5509D0C85",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARNavigationTests",
+        "name" : "ARNavigationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARUtilitiesTests",
+        "name" : "ARUtilitiesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,21 @@
+# ---------------------------
+# GitHub Actions Workflow: PR CI
+# Runs build and test jobs on pull request events.
+# ---------------------------
+
+name: PR CI
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+      - ready_for_review
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
+  
+jobs:
+  build-test:
+    uses: ./.github/workflows/buildTest.yml

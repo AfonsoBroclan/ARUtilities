@@ -1,13 +1,11 @@
-# Xcode
-*.xcodeproj
-*.xcworkspace
-.swiftpm/
+# Xcode user data (applies everywhere)
+**/xcuserdata/
+**/*.xcuserstate
+
+# SwiftPM
+.swiftpm/configuration
+.swiftpm/xcode/xcuserdata
 .build/
 
-# CocoaPods
-Pods/
-Podfile.lock
-EOF
-Sources/.DS_Store
-Tests/.DS_Store
+# OS files
 .DS_Store
