@@ -17,5 +17,5 @@ public protocol ScreenFactory {
 
   /// Creates a screen for the given route.
   @ViewBuilder
-  func makeScreen(for route: Route?) -> Screen
+  func makeScreen(for route: Route) -> Screen
 }

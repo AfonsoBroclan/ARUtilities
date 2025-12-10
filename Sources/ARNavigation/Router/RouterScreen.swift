@@ -21,10 +21,10 @@ public struct RouterScreen<Factory: ScreenFactory>: View {
   private let rootRoute: Factory.Route
 
   public init(
-    router: Router<Factory.Route> = Router(),
     factory: Factory,
     rootRoute: Factory.Route
   ) {
+    let router = Router<Factory.Route>(rootRoute: rootRoute)
     self._router = State(initialValue: router)
     self.factory = factory
     self.rootRoute = rootRoute
@@ -34,11 +34,16 @@ public struct RouterScreen<Factory: ScreenFactory>: View {
     // Navigation view for managing the stack of screens.
     NavigationStack(path: $router.path) {
 
+      // Root screen
       factory.makeScreen(for: rootRoute)
         .navigationDestination(for: Factory.Route.self) { route in
+          // Destination screens based on the route
           factory.makeScreen(for: route)
       }
     }
     .environment(router)
+    .onChange(of: router.path.count) { _, _ in
+      router.syncRouteStack()
+    }
   }
 }
