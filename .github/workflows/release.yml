@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 env:
-  APP_VERSION: "0.0.2" # Change accordingly
+  APP_VERSION: "0.1.0" # Change accordingly
   
 jobs:
   build-test:
@@ -25,7 +25,7 @@ jobs:
     - name: Create Tag
       run: |
         echo "🏷️ Creating tag for $APP_VERSION..."
-        if git rev-parse "$APP_VERSION" >/dev/null 2>&1; then
+        if git ls-remote --tags origin | grep -q "refs/tags/$APP_VERSION$"; then
           echo "⚠️ Tag $APP_VERSION already exists, skipping..."
           exit 0
         fi

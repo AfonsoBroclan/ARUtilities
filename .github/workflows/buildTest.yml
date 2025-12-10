@@ -33,12 +33,6 @@ jobs:
       run: |
         echo "🧪 Testing in simulator..."
         xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" test
-    - name: Debug - List structure
-      run: |
-        echo "Current directory: $(pwd)"
-        ls -la
-        ls -la Examples/ || echo "Examples folder not found"
-        ls -la Examples/ARNavigationDemo/ || echo "ARNavigationDemo folder not found"
     - name: Run UI Tests
       run: |
         echo "🧪 Running UI Tests in simulator..."
