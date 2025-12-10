@@ -18,6 +18,7 @@ public final class Router<Route: Hashable> {
     routeStack.last ?? rootRoute
   }
 
+  /// Flag to prevent recursive updates during navigation actions.
   private var isNavigating = false
 
   /// Represents the different routes/screens

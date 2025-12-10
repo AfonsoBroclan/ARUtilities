@@ -1,0 +1,45 @@
+# -----------------------------------------
+# Reusable workflow for building and testing ARUtilities
+# Centralises common build and test steps
+# -----------------------------------------
+
+name: Build and Test
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        description: 'Target branch to build and test'
+        required: false
+        type: string
+        default: ''
+
+env:
+  DESTINATION: "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest"
+  
+jobs:
+  build-test:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch || github.ref }}
+    - name: Build
+      run: |
+        echo "🛠️ Building for destination $DESTINATION..."
+        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" build
+    - name: Run Unit Tests
+      run: |
+        echo "🧪 Testing in simulator..."
+        xcodebuild -scheme ARUtilities -sdk iphonesimulator -destination "$DESTINATION" test
+    - name: Run UI Tests
+      run: |
+        echo "🧪 Running UI Tests in simulator..."
+        cd Examples/ARNavigationDemo
+        xcodebuild test \
+            -project ARNavigationDemo.xcodeproj \
+            -scheme ARNavigationDemo \
+            -sdk iphonesimulator \
+            -destination "$DESTINATION"
+        cd ../..
