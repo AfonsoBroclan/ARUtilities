@@ -1,7 +1,8 @@
 # Xcode
 *.xcodeproj
 *.xcworkspace
-.swiftpm/
+.swiftpm/configuration
+.swiftpm/xcode/xcuserdata
 .build/
 
 # CocoaPods
