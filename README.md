@@ -14,7 +14,7 @@ Add ARUtilities to your project:
 Or add to your `Package.swift`:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.0.2")
+    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.1.0")
 ]
 ```
 
