@@ -14,17 +14,25 @@ let package = Package(
     .library(
       name: "ARNavigation",
       targets: ["ARNavigation"]
+    ),
+    .library(
+      name: "ARPersistence",
+      targets: ["ARPersistence"]
     )
   ],
   targets: [
     .target(
       name: "ARUtilities",
-      dependencies: ["ARNavigation"],
+      dependencies: ["ARNavigation", "ARPersistence"],
       path: "Sources/ARUtilities"
     ),
     .target(
       name: "ARNavigation",
       path: "Sources/ARNavigation"
+    ),
+    .target(
+      name: "ARPersistence",
+      path: "Sources/ARPersistence"
     ),
     .testTarget(
       name: "ARUtilitiesTests",
@@ -35,6 +43,11 @@ let package = Package(
       name: "ARNavigationTests",
       dependencies: ["ARNavigation"],
       path: "Tests/ARNavigationTests"
+    ),
+    .testTarget(
+      name: "ARPersistenceTests",
+      dependencies: ["ARPersistence"],
+      path: "Tests/ARPersistenceTests"
     ),
   ]
 )
