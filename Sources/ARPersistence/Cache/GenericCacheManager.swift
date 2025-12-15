@@ -7,12 +7,19 @@
 
 import Foundation
 
-private enum Constants {
-  static let defaultTTL: TimeInterval = 24 * 60 * 60 // 24 hours
+/// Constants for GenericCacheManager
+public enum GenericCacheManagerConstants {
+  /// Default Time-To-Live (TTL) for cache entries: 24 hours
+  public static let defaultTTL: TimeInterval = 24 * 60 * 60
+}
+
+/// Errors that can occur in GenericCacheManager
+public enum GenericCacheManagerError: Error {
+  case keyValueCountMismatch
 }
 
 /// An actor-based generic cache manager that stores key-value pairs with optional TTL expiration.
-actor GenericCacheManager<Key: Hashable, Value> {
+public actor GenericCacheManager<Key: Hashable, Value> {
 
   /// Main cache entry structure
   private let cache = NSCache<WrappedKey, Entry>()
@@ -20,27 +27,26 @@ actor GenericCacheManager<Key: Hashable, Value> {
   private var ttl: TimeInterval
 
   /// Initializes the cache manager with an optional TTL (defaults to 24 hours)
-  init(ttl: TimeInterval = Constants.defaultTTL) {
+  public init(ttl: TimeInterval = GenericCacheManagerConstants.defaultTTL) {
     self.ttl = ttl
   }
 
   /// Changes the default TTL for new cache entries.
-  func changeTTL(to ttl: TimeInterval) {
+  public func changeTTL(to ttl: TimeInterval) {
     self.ttl = ttl
   }
 
   /// Inserts a value into the cache with the specified key.
-  func insert(_ value: Value, forKey key: Key) {
+  public func insert(_ value: Value, forKey key: Key) {
     let entry = Entry(value: value, expirationDate: Date().addingTimeInterval(self.ttl))
     self.cache.setObject(entry, forKey: WrappedKey(key))
   }
 
   /// Inserts multiple values into the cache with the specified keys. The number of items and their order must match the number of keys and their order.
-  func insert(items: [Value], forKeys keys: [Key]) {
+  public func insert(items: [Value], forKeys keys: [Key]) throws {
 
     guard items.count == keys.count else {
-      assertionFailure("Trying to insert a number of items with a different number of keys")
-      return
+      throw GenericCacheManagerError.keyValueCountMismatch
     }
 
     for (key, value) in zip(keys, items) {
@@ -49,7 +55,7 @@ actor GenericCacheManager<Key: Hashable, Value> {
   }
 
   /// Retrieves a value from the cache for the specified key.
-  func value(forKey key: Key) -> Value? {
+  public func value(forKey key: Key) -> Value? {
 
     guard let entry = cache.object(forKey: WrappedKey(key)) else { return nil }
 
@@ -63,15 +69,22 @@ actor GenericCacheManager<Key: Hashable, Value> {
   }
 
   /// Removes a value from the cache for the specified key.
-  func removeValue(forKey key: Key) {
+  public func removeValue(forKey key: Key) {
 
     self.cache.removeObject(forKey: WrappedKey(key))
   }
 
   /// Clears all entries from the cache.
-  func clear() {
+  public func clear() {
 
     self.cache.removeAllObjects()
+  }
+
+  /// Sets the maximum number of objects the cache should hold.
+  /// When the limit is exceeded, NSCache may evict objects automatically.
+  /// The system determines eviction policy based on memory pressure.
+  public func setCountLimit(_ limit: Int) {
+    self.cache.countLimit = limit
   }
 }
 

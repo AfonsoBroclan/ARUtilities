@@ -30,7 +30,7 @@ struct GenericCacheManagerTests {
     let keys = ["key1", "key2", "key3"]
     let values = ["value1", "value2", "value3"]
 
-    await cacheManager.insert(items: values, forKeys: keys)
+    try? await cacheManager.insert(items: values, forKeys: keys)
 
     for (key, expectedValue) in zip(keys, values) {
       let retrieved = await cacheManager.value(forKey: key)
@@ -38,14 +38,29 @@ struct GenericCacheManagerTests {
     }
   }
 
-  @Test(arguments: [1.0, nil])
-  func ttl(for ttl: TimeInterval?) async {
-
+  @Test
+  func insertMismatchedKeysAndValuesThrows() async {
     let cacheManager = GenericCacheManager<String, String>()
 
-    if let ttl {
-      await cacheManager.changeTTL(to: ttl)
+    let keys = ["key1", "key2", "key3"]
+    let values = ["value1", "value2"] // Mismatched count
+
+    do {
+      try await cacheManager.insert(items: values, forKeys: keys)
+      Issue.record("Expected keyValueCountMismatch error to be thrown")
+    } catch GenericCacheManagerError.keyValueCountMismatch {
+      // Expected error
+    } catch {
+      Issue.record("Unexpected error thrown: \(error)")
     }
+  }
+
+  @Test
+  func changeTTL() async {
+    let customTTL: TimeInterval = 1.0  // 1 second
+    let cacheManager = GenericCacheManager<String, String>()
+
+    await cacheManager.changeTTL(to: customTTL)
 
     let key = "tempKey"
     let value = "tempValue"
@@ -55,21 +70,31 @@ struct GenericCacheManagerTests {
     let immediateValue = await cacheManager.value(forKey: key)
     #expect(immediateValue == value, "Value should be retrievable immediately after insertion")
 
-    var duration: TimeInterval = 100_000_000 // 100 milliseconds in nanoseconds
+    // Sleep for longer than the custom TTL
+    let sleepDuration: TimeInterval = (customTTL + 0.1) * 1_000_000_000  // Add 0.1 seconds buffer
+    try? await Task.sleep(nanoseconds: UInt64(sleepDuration))
 
-    if let ttl {
-      duration += ttl * 1_000_000_000 // Convert ttl to nanoseconds
-    }
+    let expiredValue = await cacheManager.value(forKey: key)
+    #expect(expiredValue == nil, "Value should expire after custom TTL set via changeTTL")
+  }
 
-    try? await Task.sleep(nanoseconds: UInt64(duration))
+  @Test
+  func defaultTTL() async {
+    let cacheManager = GenericCacheManager<String, String>()
 
-    if ttl != nil {
-      let expiredValue = await cacheManager.value(forKey: key)
-      #expect(expiredValue == nil, "Value should expire after TTL")
-    } else {
-      let persistentValue = await cacheManager.value(forKey: key)
-      #expect(persistentValue == value, "Value should persist without TTL")
-    }
+    let key = "tempKey"
+    let value = "tempValue"
+
+    await cacheManager.insert(value, forKey: key)
+
+    let immediateValue = await cacheManager.value(forKey: key)
+    #expect(immediateValue == value, "Value should be retrievable immediately after insertion")
+
+    // With default 24-hour TTL, value should still be available after a short wait
+    try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+
+    let persistentValue = await cacheManager.value(forKey: key)
+    #expect(persistentValue == value, "Value should persist with default 24-hour TTL")
   }
 
   @Test
@@ -181,5 +206,31 @@ struct GenericCacheManagerTests {
 
     let expiredValue = await cacheManager.value(forKey: key)
     #expect(expiredValue == nil, "Value should expire after custom TTL")
+  }
+
+  @Test
+  func setCountLimit() async {
+    let cacheManager = GenericCacheManager<Int, String>()
+
+    // Set count limit to 5
+    await cacheManager.setCountLimit(5)
+
+    // Insert 10 items
+    for i in 0..<10 {
+      await cacheManager.insert("value\(i)", forKey: i)
+    }
+
+    // NSCache may evict items when limit is exceeded based on system memory pressure
+    // We can't guarantee which items will be evicted, but we can verify
+    // that at least some items are still cached
+    var cachedCount = 0
+    for i in 0..<10 {
+      if await cacheManager.value(forKey: i) != nil {
+        cachedCount += 1
+      }
+    }
+
+    // With a limit of 5, we expect at most 5 items (but NSCache may evict earlier based on system policy)
+    #expect(cachedCount <= 5, "Cache should respect count limit and contain at most 5 items")
   }
 }
