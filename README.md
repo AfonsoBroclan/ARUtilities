@@ -14,24 +14,31 @@ Add ARUtilities to your project:
 Or add to your `Package.swift`:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.1.0")
+    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.2.0")
 ]
 ```
 
-Import the module you need
+#### Requirements
+- iOS 17.0+
+- Swift 6.0+
+
+#### Modules
 * ARUtilities
 * ARNavigation
+* ARPersistence
 
 ## ARNavigation
 
+### Router
+
 A lightweight, type-safe navigation router for SwiftUI applications.
 
-### Features
+#### Features
 - Protocol-based routing with `Router`, `RouterScreen`, and `ScreenFactory`
 - Type-safe navigation without string-based identifiers
 - Easy to test and mock
 
-### Usage
+#### Usage
 
 ```swift
 // Define your routes
@@ -56,6 +63,61 @@ struct AppScreenFactory: ScreenFactory {
 @StateObject var router = Router<AppRoute>()
 ```
 
-### Example
+#### Example
 
 See the full working example in Examples/ARNavigationDemo.
+
+## ARPersistence
+
+Persistence utilities for iOS applications.
+
+### GenericCacheManager
+
+A thread-safe, actor-based cache manager with TTL support.
+
+#### Features
+- Generic key-value storage with type safety
+- Automatic expiration via TTL (Time-To-Live)
+- Actor-based thread safety
+- Configurable count limits
+- Built on NSCache for automatic memory management
+
+#### Usage
+
+##### Basic Caching
+
+```swift
+import ARPersistence
+
+// Create a cache with default 24-hour TTL
+let cache = GenericCacheManager<String, User>()
+
+// Insert values
+await cache.insert(user, forKey: "user_123")
+
+// Retrieve values
+if let cachedUser = await cache.value(forKey: "user_123") {
+    print("Found user: \(cachedUser)")
+}
+
+// Remove specific value
+await cache.removeValue(forKey: "user_123")
+
+// Clear all cached values
+await cache.clear()
+```
+
+##### Custom TTL and Count Limit
+
+```swift
+// Create cache with 1-hour TTL
+let cache = GenericCacheManager<String, Data>(ttl: 3600)
+
+// Or change TTL after initialization
+await cache.changeTTL(to: 1800) // 30 minutes
+
+// Set maximum count limit
+await cache.setCountLimit(100) // Max 100 items
+
+// System evicts items automatically when limit is exceeded
+```
