@@ -49,6 +49,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ARNetworking"
+               BuildableName = "ARNetworking"
+               BlueprintName = "ARNetworking"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -85,6 +99,16 @@
                BlueprintIdentifier = "ARPersistenceTests"
                BuildableName = "ARPersistenceTests"
                BlueprintName = "ARPersistenceTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ARNetworkingTests"
+               BuildableName = "ARNetworkingTests"
+               BlueprintName = "ARNetworkingTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

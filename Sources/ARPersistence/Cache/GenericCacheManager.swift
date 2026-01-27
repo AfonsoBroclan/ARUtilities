@@ -19,7 +19,7 @@ public enum GenericCacheManagerError: Error {
 }
 
 /// An actor-based generic cache manager that stores key-value pairs with optional TTL expiration.
-public actor GenericCacheManager<Key: Hashable, Value> {
+public actor GenericCacheManager<Key: Hashable, Value: Sendable> {
 
   /// Main cache entry structure
   private let cache = NSCache<WrappedKey, Entry>()
@@ -32,30 +32,30 @@ public actor GenericCacheManager<Key: Hashable, Value> {
   }
 
   /// Changes the default TTL for new cache entries.
-  public func changeTTL(to ttl: TimeInterval) {
+  public func changeTTL(to ttl: TimeInterval) async {
     self.ttl = ttl
   }
 
   /// Inserts a value into the cache with the specified key.
-  public func insert(_ value: Value, forKey key: Key) {
+  public func insert(_ value: Value, forKey key: Key) async {
     let entry = Entry(value: value, expirationDate: Date().addingTimeInterval(self.ttl))
     self.cache.setObject(entry, forKey: WrappedKey(key))
   }
 
   /// Inserts multiple values into the cache with the specified keys. The number of items and their order must match the number of keys and their order.
-  public func insert(items: [Value], forKeys keys: [Key]) throws {
+  public func insert(items: [Value], forKeys keys: [Key]) async throws {
 
     guard items.count == keys.count else {
       throw GenericCacheManagerError.keyValueCountMismatch
     }
 
     for (key, value) in zip(keys, items) {
-      insert(value, forKey: key)
+      await insert(value, forKey: key)
     }
   }
 
   /// Retrieves a value from the cache for the specified key.
-  public func value(forKey key: Key) -> Value? {
+  public func value(forKey key: Key) async -> Value? {
 
     guard let entry = cache.object(forKey: WrappedKey(key)) else { return nil }
 
@@ -69,13 +69,13 @@ public actor GenericCacheManager<Key: Hashable, Value> {
   }
 
   /// Removes a value from the cache for the specified key.
-  public func removeValue(forKey key: Key) {
+  public func removeValue(forKey key: Key) async {
 
     self.cache.removeObject(forKey: WrappedKey(key))
   }
 
   /// Clears all entries from the cache.
-  public func clear() {
+  public func clear() async {
 
     self.cache.removeAllObjects()
   }
@@ -83,7 +83,7 @@ public actor GenericCacheManager<Key: Hashable, Value> {
   /// Sets the maximum number of objects the cache should hold.
   /// When the limit is exceeded, NSCache may evict objects automatically.
   /// The system determines eviction policy based on memory pressure.
-  public func setCountLimit(_ limit: Int) {
+  public func setCountLimit(_ limit: Int) async {
     self.cache.countLimit = limit
   }
 }
@@ -112,7 +112,7 @@ private extension GenericCacheManager {
   }
 
   /// Cache entry containing the value and its optional expiration date
-  class Entry {
+  final class Entry {
 
     let value: Value
     let expirationDate: Date?

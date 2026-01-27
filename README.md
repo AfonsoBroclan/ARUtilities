@@ -25,6 +25,7 @@ dependencies: [
 #### Modules
 * ARUtilities
 * ARNavigation
+* ARNetworking
 * ARPersistence
 
 ## ARNavigation
@@ -66,6 +67,14 @@ struct AppScreenFactory: ScreenFactory {
 #### Example
 
 See the full working example in Examples/ARNavigationDemo.
+
+## ARNetworking
+
+Networking utilities for iOS applications.
+
+### NetworkManager
+
+
 
 ## ARPersistence
 

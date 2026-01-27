@@ -18,6 +18,10 @@ let package = Package(
     .library(
       name: "ARPersistence",
       targets: ["ARPersistence"]
+    ),
+    .library(
+      name: "ARNetworking",
+      targets: ["ARNetworking"]
     )
   ],
   targets: [
@@ -34,6 +38,11 @@ let package = Package(
       name: "ARPersistence",
       path: "Sources/ARPersistence"
     ),
+    .target(
+      name: "ARNetworking",
+      dependencies: ["ARPersistence"],
+      path: "Sources/ARNetworking"
+    ),
     .testTarget(
       name: "ARUtilitiesTests",
       dependencies: ["ARUtilities"],
@@ -48,6 +57,11 @@ let package = Package(
       name: "ARPersistenceTests",
       dependencies: ["ARPersistence"],
       path: "Tests/ARPersistenceTests"
+    ),
+    .testTarget(
+      name: "ARNetworkingTests",
+      dependencies: ["ARNetworking", "ARPersistence"],
+      path: "Tests/ARNetworkingTests"
     ),
   ]
 )
