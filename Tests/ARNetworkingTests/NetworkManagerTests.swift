@@ -102,14 +102,14 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: expectedUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When
-            let result: TestUser = try await sut.request(
+            let result: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
@@ -133,14 +133,14 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: mockUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When
-            let _: TestUser = try await sut.request(
+            let _: TestUser = try await networkManager.request(
                 endpoint: endpoint,
                 bypassCache: false
             )
@@ -157,14 +157,14 @@ struct NetworkManagerTests {
             mockSession.statusCode = statusCode
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When/Then - Should not throw
-            let _: TestUser = try await sut.request(
+            let _: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
@@ -189,14 +189,14 @@ struct NetworkManagerTests {
             await mockCache.saveObject(cachedUser, forKey: TestEndpoint.users)
             mockCache.saveCallCount = 0 // Reset counter
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When
-            let result: TestUser = try await sut.request(
+            let result: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
@@ -220,14 +220,14 @@ struct NetworkManagerTests {
             await mockCache.saveObject(cachedUser, forKey: TestEndpoint.users)
             mockCache.saveCallCount = 0
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When
-            let result: TestUser = try await sut.request(
+            let result: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: true
             )
@@ -244,14 +244,14 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: expectedUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When
-            let result: TestUser = try await sut.request(
+            let result: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
@@ -271,14 +271,14 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: user)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // When - Request users
-            let _: TestUser = try await sut.request(
+            let _: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
@@ -287,7 +287,7 @@ struct NetworkManagerTests {
             try mockSession.setData(post)
 
             // Request posts
-            let _: TestPost = try await sut.request(
+            let _: TestPost = try await networkManager.request(
                 endpoint: TestEndpoint.posts,
                 bypassCache: false
             )
@@ -314,7 +314,7 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock.createWithRawData(invalidJSON.data(using: .utf8)!)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -322,7 +322,7 @@ struct NetworkManagerTests {
 
             // When/Then
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -345,7 +345,7 @@ struct NetworkManagerTests {
             mockSession.statusCode = statusCode
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -353,7 +353,7 @@ struct NetworkManagerTests {
 
             // When/Then
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -376,7 +376,7 @@ struct NetworkManagerTests {
             mockSession.statusCode = statusCode
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -384,7 +384,7 @@ struct NetworkManagerTests {
 
             // When/Then
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -407,7 +407,7 @@ struct NetworkManagerTests {
             mockSession.statusCode = statusCode
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -415,7 +415,7 @@ struct NetworkManagerTests {
 
             // When/Then
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -441,7 +441,7 @@ struct NetworkManagerTests {
 
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -449,7 +449,7 @@ struct NetworkManagerTests {
 
             // When/Then
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -472,7 +472,7 @@ struct NetworkManagerTests {
             mockSession.statusCode = 500
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
@@ -480,7 +480,7 @@ struct NetworkManagerTests {
 
             // When
             do {
-                let _: TestUser = try await sut.request(
+                let _: TestUser = try await networkManager.request(
                     endpoint: TestEndpoint.users,
                     bypassCache: false
                 )
@@ -507,20 +507,20 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: mockUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // Make some requests to populate cache
-            let _: TestUser = try await sut.request(endpoint: TestEndpoint.users, bypassCache: false)
-            let _: TestUser = try await sut.request(endpoint: TestEndpoint.user(id: 1), bypassCache: false)
+            let _: TestUser = try await networkManager.request(endpoint: TestEndpoint.users, bypassCache: false)
+            let _: TestUser = try await networkManager.request(endpoint: TestEndpoint.user(id: 1), bypassCache: false)
 
             #expect(mockCache.storage.count == 2, "Cache should contain two entries")
 
             // When
-            await sut.clearCache()
+            await networkManager.clearCache()
 
             // Then
             #expect(mockCache.clearCallCount == 1, "Clear Cache should have been called")
@@ -534,20 +534,20 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: mockUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession
             )
 
             // Make requests to populate cache
-            let _: TestUser = try await sut.request(endpoint: TestEndpoint.users, bypassCache: false)
-            let _: TestUser = try await sut.request(endpoint: TestEndpoint.posts, bypassCache: false)
+            let _: TestUser = try await networkManager.request(endpoint: TestEndpoint.users, bypassCache: false)
+            let _: TestUser = try await networkManager.request(endpoint: TestEndpoint.posts, bypassCache: false)
 
             #expect(mockCache.storage.count == 2, "Cache should contain two entries")
 
             // When
-            await sut.removeCachedResponse(for: TestEndpoint.users)
+            await networkManager.removeCachedResponse(for: TestEndpoint.users)
 
             // Then
             #expect(mockCache.removeCallCount == 1, "Remove cached response should've been called")
@@ -573,7 +573,7 @@ struct NetworkManagerTests {
             let mockSession = try URLSessionMock(object: mockUser)
             let mockCache = NetworkCacheManagerMock<TestEndpoint>()
 
-            let sut = NetworkManager(
+            let networkManager = NetworkManager(
                 baseURL: "https://api.example.com",
                 cacheManager: mockCache,
                 urlSession: mockSession,
@@ -581,7 +581,7 @@ struct NetworkManagerTests {
             )
 
             // When / Then - Should not throw
-            let _: TestUser = try await sut.request(
+            let _: TestUser = try await networkManager.request(
                 endpoint: TestEndpoint.users,
                 bypassCache: false
             )
