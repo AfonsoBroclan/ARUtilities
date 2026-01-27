@@ -15,7 +15,7 @@ on:
         default: ''
 
 env:
-  DESTINATION: "platform=iOS Simulator,name=iPhone 18 Pro,OS=latest"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest"
   
 jobs:
   build-test:
