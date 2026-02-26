@@ -31,6 +31,7 @@
 		0506E7892F48A73A009500A0 /* ARUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0506E7962F48A73B009500A0 /* ARUIDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARUIDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0506E7A02F48A73B009500A0 /* ARUIDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARUIDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		058B58272F508840000FE249 /* ARUIDemo.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = ARUIDemo.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,6 +81,7 @@
 		0506E7802F48A73A009500A0 = {
 			isa = PBXGroup;
 			children = (
+				058B58272F508840000FE249 /* ARUIDemo.xctestplan */,
 				0506E78B2F48A73A009500A0 /* ARUIDemo */,
 				0506E7992F48A73B009500A0 /* ARUIDemoTests */,
 				0506E7A32F48A73B009500A0 /* ARUIDemoUITests */,
