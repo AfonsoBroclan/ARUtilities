@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 env:
-  APP_VERSION: "0.3.0" # Change accordingly
+  APP_VERSION: "0.4.0" # Change accordingly
   
 jobs:
   build-test:

@@ -22,7 +22,14 @@ let package = Package(
     .library(
       name: "ARNetworking",
       targets: ["ARNetworking"]
+    ),
+    .library(
+      name: "ARUI",
+      targets: ["ARUI"]
     )
+  ],
+  dependencies: [
+      .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.0")
   ],
   targets: [
     .target(
@@ -43,6 +50,10 @@ let package = Package(
       dependencies: ["ARPersistence"],
       path: "Sources/ARNetworking"
     ),
+    .target(
+      name: "ARUI",
+      path: "Sources/ARUI"
+    ),
     .testTarget(
       name: "ARUtilitiesTests",
       dependencies: ["ARUtilities"],
@@ -62,6 +73,14 @@ let package = Package(
       name: "ARNetworkingTests",
       dependencies: ["ARNetworking", "ARPersistence"],
       path: "Tests/ARNetworkingTests"
+    ),
+    .testTarget(
+      name: "ARUITests",
+      dependencies: [
+        "ARUI",
+        .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+      ],
+      path: "Tests/ARUITests"
     ),
   ]
 )
