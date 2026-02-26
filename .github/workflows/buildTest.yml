@@ -36,11 +36,13 @@ jobs:
     - name: Run UI Tests
       run: |
         echo "🧪 Running UI Tests in simulator..."
+        cd $GITHUB_WORKSPACE
         xcodebuild test \
             -project Examples/ARNavigationDemo/ARNavigationDemo.xcodeproj \
             -scheme ARNavigationDemo \
             -sdk iphonesimulator \
             -destination "$DESTINATION"
+        echo "🧪 NavigationDemo UI Tests passed. Running UIDemo now..."
         xcodebuild test \
             -project Examples/ARUIDemo/ARUIDemo.xcodeproj \
             -scheme ARUIDemo \
