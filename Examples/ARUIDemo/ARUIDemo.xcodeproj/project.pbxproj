@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0506E7B82F48E60F009500A0 /* ARUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0506E7B72F48E60F009500A0 /* ARUI */; };
+		058B582A2F509DFB000FE249 /* ARUI in Frameworks */ = {isa = PBXBuildFile; productRef = 058B58292F509DFB000FE249 /* ARUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0506E7B82F48E60F009500A0 /* ARUI in Frameworks */,
+				058B582A2F509DFB000FE249 /* ARUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +122,7 @@
 			name = ARUIDemo;
 			packageProductDependencies = (
 				0506E7B72F48E60F009500A0 /* ARUI */,
+				058B58292F509DFB000FE249 /* ARUI */,
 			);
 			productName = ARUIDemo;
 			productReference = 0506E7892F48A73A009500A0 /* ARUIDemo.app */;
@@ -204,7 +207,7 @@
 			mainGroup = 0506E7802F48A73A009500A0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0506E7B62F48E60F009500A0 /* XCLocalSwiftPackageReference "../../../../ARUtilities" */,
+				058B58282F509DFB000FE249 /* XCLocalSwiftPackageReference "../../../ARUtilities" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0506E78A2F48A73A009500A0 /* Products */;
@@ -583,14 +586,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		0506E7B62F48E60F009500A0 /* XCLocalSwiftPackageReference "../../../../ARUtilities" */ = {
+		058B58282F509DFB000FE249 /* XCLocalSwiftPackageReference "../../../ARUtilities" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../../ARUtilities;
+			relativePath = ../../../ARUtilities;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0506E7B72F48E60F009500A0 /* ARUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ARUI;
+		};
+		058B58292F509DFB000FE249 /* ARUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ARUI;
 		};
