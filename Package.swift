@@ -52,7 +52,10 @@ let package = Package(
     ),
     .target(
       name: "ARUI",
-      path: "Sources/ARUI"
+      path: "Sources/ARUI",
+      swiftSettings: [
+          .enableExperimentalFeature("IsolatedDeinit")
+      ]
     ),
     .testTarget(
       name: "ARUtilitiesTests",
@@ -80,7 +83,10 @@ let package = Package(
         "ARUI",
         .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
       ],
-      path: "Tests/ARUITests"
+      path: "Tests/ARUITests",
+      swiftSettings: [
+          .enableExperimentalFeature("IsolatedDeinit")
+      ]
     ),
   ]
 )
