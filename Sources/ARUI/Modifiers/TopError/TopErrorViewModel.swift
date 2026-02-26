@@ -7,7 +7,6 @@
 
 import Foundation
 
-@MainActor
 @Observable
 final class TopErrorViewModel {
     
@@ -16,6 +15,7 @@ final class TopErrorViewModel {
     
     var onDismiss: (() -> Void)?
     
+    @MainActor
     func show(_ message: String, duration: TimeInterval?) {
         autoDismissTask?.cancel()
         errorMessage = message
@@ -25,21 +25,24 @@ final class TopErrorViewModel {
         }
     }
     
+    @MainActor
     func dismiss() {
         autoDismissTask?.cancel()
         errorMessage = nil
         onDismiss?()
     }
     
+    @MainActor
     private func startAutoDismiss(duration: TimeInterval) {
         autoDismissTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
             guard !Task.isCancelled else { return }
-            self?.dismiss()
+            await MainActor.run {
+                self?.dismiss()
+            }
         }
     }
     
-    @MainActor
     deinit {
         autoDismissTask?.cancel()
     }
