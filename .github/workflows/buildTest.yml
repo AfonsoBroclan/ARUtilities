@@ -42,4 +42,11 @@ jobs:
             -scheme ARNavigationDemo \
             -sdk iphonesimulator \
             -destination "$DESTINATION"
+        cd ..
+        cd ARUIDemo
+        xcodebuild test \
+            -project ARUIDemo.xcodeproj \
+            -scheme ARUIDemo \
+            -sdk iphonesimulator \
+            -destination "$DESTINATION"
         cd ../..

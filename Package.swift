@@ -34,7 +34,7 @@ let package = Package(
   targets: [
     .target(
       name: "ARUtilities",
-      dependencies: ["ARNavigation", "ARPersistence"],
+      dependencies: ["ARNavigation", "ARPersistence", "ARNetworking", "ARUI"],
       path: "Sources/ARUtilities"
     ),
     .target(

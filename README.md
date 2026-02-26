@@ -14,7 +14,7 @@ Add ARUtilities to your project:
 Or add to your `Package.swift`:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.2.0")
+    .package(url: "https://github.com/AfonsoBroclan/ARUtilities", from: "0.4.0")
 ]
 ```
 
@@ -27,6 +27,7 @@ dependencies: [
 * ARNavigation
 * ARNetworking
 * ARPersistence
+* ARUI
 
 ## ARNavigation
 
@@ -213,3 +214,39 @@ await cache.setCountLimit(100) // Max 100 items
 
 // System evicts items automatically when limit is exceeded
 ```
+
+### ARUI
+
+A collection of reusable SwiftUI components and modifiers for common UI patterns.
+
+#### TopErrorModifier
+
+Display error messages at the top of your screen with smooth animations and auto-dismiss functionality.
+
+**Features:**
+- Auto-dismiss with configurable duration
+- Manual dismiss option
+- Customizable colors and styling
+- Smooth animations and transitions
+- Full accessibility support
+
+**Usage:**
+```swift
+import ARUI
+
+struct MyView: View {
+    @State private var errorMessage: String?
+    
+    var body: some View {
+        VStack {
+            Button("Trigger Error") {
+                errorMessage = "Something went wrong!"
+            }
+        }
+        .topError(message: $errorMessage)
+    }
+}
+```
+
+**Demo:**
+See the [ARUIDemo](Examples/ARUIDemo) for a complete demonstration.
