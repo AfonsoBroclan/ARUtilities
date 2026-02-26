@@ -36,17 +36,13 @@ jobs:
     - name: Run UI Tests
       run: |
         echo "🧪 Running UI Tests in simulator..."
-        cd Examples/ARNavigationDemo
         xcodebuild test \
-            -project ARNavigationDemo.xcodeproj \
+            -project Examples/ARNavigationDemo/ARNavigationDemo.xcodeproj \
             -scheme ARNavigationDemo \
             -sdk iphonesimulator \
             -destination "$DESTINATION"
-        cd ..
-        cd ARUIDemo
         xcodebuild test \
-            -project ARUIDemo.xcodeproj \
+            -project Examples/ARUIDemo/ARUIDemo.xcodeproj \
             -scheme ARUIDemo \
             -sdk iphonesimulator \
             -destination "$DESTINATION"
-        cd ../..
