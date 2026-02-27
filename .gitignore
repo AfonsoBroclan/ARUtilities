@@ -9,3 +9,6 @@
 
 # OS files
 .DS_Store
+
+!**/__Snapshots__/**/*.1.png  # Keep reference images
+**/__Snapshots__/**/*.png  # Keep reference images

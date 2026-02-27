@@ -1,0 +1,52 @@
+{
+  "configurations" : [
+    {
+      "id" : "0FEF3699-CB11-475F-A567-1EA298C59FF5",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARNavigationTests",
+        "name" : "ARNavigationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARUtilitiesTests",
+        "name" : "ARUtilitiesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARPersistenceTests",
+        "name" : "ARPersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARNetworkingTests",
+        "name" : "ARNetworkingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ARUITests",
+        "name" : "ARUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
