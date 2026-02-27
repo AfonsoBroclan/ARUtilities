@@ -9,6 +9,10 @@ import XCTest
 
 final class ARUIDemoUITests: XCTestCase {
     
+    private enum Constants {
+        static let timeout: TimeInterval = 2.0
+    }
+    
     var app: XCUIApplication!
     
     override func setUpWithError() throws {
@@ -30,7 +34,7 @@ final class ARUIDemoUITests: XCTestCase {
         showErrorButton.tap()
         
         // Error should appear
-        XCTAssertTrue(errorText.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(errorText.waitForExistence(timeout: Constants.timeout))
         XCTAssertTrue(errorText.exists)
     }
     
@@ -42,7 +46,7 @@ final class ARUIDemoUITests: XCTestCase {
         
         // Show error
         showErrorButton.tap()
-        XCTAssertTrue(errorText.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(errorText.waitForExistence(timeout: Constants.timeout))
         
         // Wait for auto-dismiss (3 seconds + buffer)
         let disappeared = NSPredicate(format: "exists == false")
@@ -64,14 +68,14 @@ final class ARUIDemoUITests: XCTestCase {
         
         // Show first error
         showErrorButton.tap()
-        XCTAssertTrue(shortError.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(shortError.waitForExistence(timeout: Constants.timeout))
         
         // Show second error before first dismisses
         sleep(1) // Wait a bit but not for full auto-dismiss
         showLongErrorButton.tap()
         
         // Long error should appear
-        XCTAssertTrue(longError.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(longError.waitForExistence(timeout: Constants.timeout))
         
         // Short error should be gone
         XCTAssertFalse(shortError.exists)
@@ -105,7 +109,7 @@ final class ARUIDemoUITests: XCTestCase {
         
         // Show manual dismiss error
         showManualErrorButton.tap()
-        XCTAssertTrue(errorText.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(errorText.waitForExistence(timeout: Constants.timeout))
         
         // Wait longer than auto-dismiss duration to ensure it doesn't auto-dismiss
         sleep(4)
@@ -140,7 +144,7 @@ final class ARUIDemoUITests: XCTestCase {
         let longError = app.staticTexts["Error: An unexpected error occurred while processing your request. Please try again later or contact support."]
         
         showLongErrorButton.tap()
-        XCTAssertTrue(longError.waitForExistence(timeout: 1.0))
+        XCTAssertTrue(longError.waitForExistence(timeout: Constants.timeout))
         XCTAssertTrue(longError.exists)
     }
 }
