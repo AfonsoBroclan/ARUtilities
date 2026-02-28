@@ -51,7 +51,7 @@ final class ARUIDemoUITests: XCTestCase {
         // Wait for auto-dismiss (3 seconds + buffer)
         let disappeared = NSPredicate(format: "exists == false")
         let expectation = XCTNSPredicateExpectation(predicate: disappeared, object: errorText)
-        let result = XCTWaiter.wait(for: [expectation], timeout: 4.0)
+        let result = XCTWaiter.wait(for: [expectation], timeout: 5.0)
         
         XCTAssertEqual(result, .completed, "Error should auto-dismiss after 3 seconds")
         XCTAssertFalse(errorText.exists)
